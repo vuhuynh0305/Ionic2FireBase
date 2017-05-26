@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from 'firebase/app';
 
@@ -18,19 +18,47 @@ import { HomePage } from "../home/home";
 })
 export class Login {
 
-  public email: string;
-  public password: string;
+  public email: string = "";
+  public password: string = "";
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public navParams: NavParams,
-    private afu:AngularFireAuth) {
+    private afu: AngularFireAuth,
+    private toastCtrl: ToastController) {
   }
 
   login() {
-    firebase.auth().signInWithEmailAndPassword(this.email,this.password).then(response =>{
-      this.navCtrl.setRoot(HomePage);
-    }).catch(error => {
-      console.log(error);
-    })
+    if (this.email == "" || this.password == "") {
+      let toast = this.toastCtrl.create({
+        message: "Please Input Email or Password",
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present();
+    }
+    else {
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(response => {
+        this.navCtrl.setRoot(HomePage);
+      }).catch((error: any) => {
+        let message = "";
+        var errorCode = error.code;
+        if (errorCode == "auth/user-not-found") {
+          message = "Email Not Found";
+        }
+        else if (errorCode == "auth/wrong-password") {
+          message = "Wrong Password";
+        }
+        else {
+          message = "Email Format Is Invalid";
+        }
+        let toast = this.toastCtrl.create({
+          message: message,
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.present();
+        console.log(error);
+      })
+    }
   }
 }

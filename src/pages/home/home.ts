@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { Login } from "../login/login";
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
   books: FirebaseListObservable<any>;
-  auth: AngularFireAuth
+  image: any;
 
   constructor(
     public navCtrl: NavController,
@@ -29,6 +31,11 @@ export class HomePage {
         {
           name: 'author',
           placeholder: "Enter Author's Name"
+        },
+        {
+          name:'image',
+          type: 'file',
+          placeholder: 'Choose File'         
         }
       ],
       buttons: [
@@ -122,5 +129,7 @@ export class HomePage {
 
   logout() {
     firebase.auth().signOut();
+    this.navCtrl.setRoot(Login);
+    
   }
 }
