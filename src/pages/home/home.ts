@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, AlertController } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Login } from "../login/login";
+import { AddbookPage } from "../addbook/addbook";
 
 @Component({
   selector: 'page-home',
@@ -21,43 +21,7 @@ export class HomePage {
   }
 
   addBook() {
-    let prompt = this.alertCtrl.create({
-      title: "Add New Book",
-      inputs: [
-        {
-          name: 'title',
-          placeholder: "Enter Book's Title"
-        },
-        {
-          name: 'author',
-          placeholder: "Enter Author's Name"
-        },
-        {
-          name:'image',
-          type: 'file',
-          placeholder: 'Choose File'         
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: () => {
-            console.log('Cancel')
-          }
-        },
-        {
-          text: 'Add Book',
-          handler: data => {
-            this.books.push({
-              title: data.title,
-              author: data.author
-            })
-          }
-        }
-      ]
-    });
-
-    prompt.present();
+    this.navCtrl.push(AddbookPage);
   }
 
   editBook(book) {

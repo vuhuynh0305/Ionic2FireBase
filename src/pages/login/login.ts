@@ -18,8 +18,8 @@ import { HomePage } from "../home/home";
 })
 export class Login {
 
-  public email: string = "";
-  public password: string = "";
+  public email: string = "mariohuynh0305@gmail.com";
+  public password: string = "03051994";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,

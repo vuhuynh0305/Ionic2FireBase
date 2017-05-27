@@ -6,10 +6,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireModule } from "angularfire2";
 import { AngularFireDatabaseModule } from "angularfire2/database";
 import { AngularFireAuthModule } from "angularfire2/auth";
+import { Camera } from "@ionic-native/camera";
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Login } from '../pages/login/login';
+import { AddbookPage } from '../pages/addbook/addbook';
 
 export const config = {
   apiKey: "AIzaSyBCZXs-0SwXsns0m498HcyoCp_UqgWQy7o",
@@ -24,7 +26,8 @@ export const config = {
   declarations: [
     MyApp,
     HomePage,
-    Login
+    Login,
+    AddbookPage
   ],
   imports: [
     BrowserModule,
@@ -37,12 +40,14 @@ export const config = {
   entryComponents: [
     MyApp,
     HomePage,
-    Login
+    Login,
+    AddbookPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    Camera
   ]
 })
 export class AppModule { }
