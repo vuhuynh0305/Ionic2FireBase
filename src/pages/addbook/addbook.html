@@ -19,7 +19,7 @@
       <ion-input type="text" [(ngModel)]='author'></ion-input>
     </ion-item>
   </ion-list>
-
-<img ng-src="https://firebasestorage.googleapis.com/v0/b/fireblogger-fe798.appspot.com/o/image%2Fsample1495871730146.jpg?alt=media&token=7a188bf3-10f9-46fe-99c7-82c4b5257b85">
+  <img [src]="imageURL" *ngIf="imageURL"/>
+  <button ion-button (click)="uploadImageToFirebase()" *ngIf="imageURL">Upload to Firebase!</button>
   <button block ion-button (click)='saveBook()'>Save Book</button>
 </ion-content>

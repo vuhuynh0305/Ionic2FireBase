@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, Platform } from 'ionic-angular';
 import { Camera, CameraOptions } from "@ionic-native/camera";
+import { FilePath } from '@ionic-native/file-path';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
-import { } from 'angularfire2/storage';
 import * as firebase from 'firebase';
 import 'whatwg-fetch';
 
@@ -15,12 +15,13 @@ export class AddbookPage {
   books: FirebaseListObservable<any>;
   title: string = "";
   author: string = "";
+  imageURL: string = "";
   options: CameraOptions = {
     quality: 100,
-    destinationType: this.camera.DestinationType.FILE_URI,
+    destinationType: this.camera.DestinationType.DATA_URL,
     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    targetHeight: 640,
-    correctOrientation: true
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE
   }
 
   constructor(
@@ -28,7 +29,9 @@ export class AddbookPage {
     public navParams: NavParams,
     public toastCtrl: ToastController,
     public afd: AngularFireDatabase,
-    public camera: Camera) {
+    public camera: Camera,
+    public filePath: FilePath,
+    public platform: Platform) {
     this.books = this.afd.list('/Books');
   }
 
@@ -46,7 +49,6 @@ export class AddbookPage {
         title: this.title,
         author: this.author
       };
-      console.log(newBook);
       this.books.push(newBook);
       let toast = this.toastCtrl.create({
         message: 'New Book Added',
@@ -59,42 +61,17 @@ export class AddbookPage {
 
   getPicture() {
     this.camera.getPicture(this.options)
-    .then(imagePath => {
-      alert('file name: : '+ imagePath.split('/').pop());
-      alert ('got image path ' + imagePath);
-      return this.convertImageToBlob(imagePath);
-    }).then(imageBlob => {
-      alert ('got image blob ' + imageBlob);
-      return this.uploadImageToFirebase(imageBlob);
-    }).then((uploadSnapshot:any) => {
-      alert('file upload successfully ' + uploadSnapshot.downloadURL);
-
-    }, (error) => {
-      alert(error);
-    })
-  }
-
-  convertImageToBlob(imagePath) {
-    return fetch(imagePath).then((response) => {
-      return response.blob();
-    }).then(blob => {
-      return blob;
-    })
-  }
-
-  uploadImageToFirebase(imageBlob) {
-    var fileName = 'sample' + new Date().getTime() + '.jpg';
-    return new Promise((resolve, reject) => {
-      var fileRef = firebase.storage().ref('image/' + fileName);
-      alert(imageBlob);
-      var uploadtask = fileRef.put(imageBlob);
-      uploadtask.on('state_changed', (snapshot) => {
-        console.log('snapshot progress ' + snapshot);
-      }, (error) => {
-        reject(error);
-      }, () => {
-        resolve(uploadtask.snapshot);
+      .then((imagePath) => {
+        this.imageURL = 'data:image/jpeg;base64,' + imagePath;
+        console.log(this.imageURL);
+        // this.uploadImageToFirebase('data:image/jpeg;base64,' + imagePath);
       })
-    })
+  }
+
+  uploadImageToFirebase() {
+    var fileName = 'sample' + new Date().getTime() + '.jpg';
+    var fileRef = firebase.storage().ref();
+    var imageRef = fileRef.child('image/' + fileName);
+    imageRef.putString(this.imageURL,firebase.storage.StringFormat.DATA_URL);
   }
 }
