@@ -25,6 +25,12 @@ export class Login {
     public navParams: NavParams,
     private afu: AngularFireAuth,
     private toastCtrl: ToastController) {
+      this.afu.auth.onAuthStateChanged(user => {
+        user.updateProfile({
+          displayName: 'Vu'
+        })
+        console.log(user);
+      })
   }
 
   login() {

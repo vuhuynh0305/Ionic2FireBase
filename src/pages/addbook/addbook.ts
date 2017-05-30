@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, Platform } from 'ionic-angular';
 import { Camera, CameraOptions } from "@ionic-native/camera";
-import { FilePath } from '@ionic-native/file-path';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import 'whatwg-fetch';
@@ -30,7 +29,6 @@ export class AddbookPage {
     public toastCtrl: ToastController,
     public afd: AngularFireDatabase,
     public camera: Camera,
-    public filePath: FilePath,
     public platform: Platform) {
     this.books = this.afd.list('/Books');
   }
