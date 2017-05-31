@@ -3,7 +3,6 @@ import { NavController, AlertController } from 'ionic-angular';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import * as firebase from 'firebase/app';
 import { Login } from "../login/login";
-import { AddbookPage } from "../addbook/addbook";
 
 @Component({
   selector: 'page-home',
@@ -21,7 +20,7 @@ export class HomePage {
   }
 
   addBook() {
-    this.navCtrl.push(AddbookPage);
+    this.navCtrl.push("AddbookPage");
   }
 
   editBook(book) {

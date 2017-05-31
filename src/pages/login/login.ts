@@ -17,7 +17,7 @@ import { HomePage } from "../home/home";
   templateUrl: 'login.html',
 })
 export class Login {
-
+  public auth: string = 'login';
   public email: string = "mariohuynh0305@gmail.com";
   public password: string = "03051994";
   constructor(

@@ -1,13 +1,47 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>Login</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <div>
+    <img src='../../assets/logo/logo.png'>
+  </div>
+
+  <div padding>
+    <ion-segment [(ngModel)]="auth">
+      <ion-segment-button value="login">
+        Login
+      </ion-segment-button>
+      <ion-segment-button value="signup">
+        Sign Up
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="auth">
+    <ion-list *ngSwitchCase="'login'">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="img/thumbnail-puppy-1.jpg">
+        </ion-thumbnail>
+        <h2>Ruby</h2>
+      </ion-item>
+      ...
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'signup'">
+      <ion-item>
+        <ion-thumbnail item-left>
+          <img src="img/thumbnail-kitten-1.jpg">
+        </ion-thumbnail>
+        <h2>Luna</h2>
+      </ion-item>
+      ...
+    </ion-list>
+  </div>
+
   <ion-list>
     <ion-item>
       <ion-label floating>Email</ion-label>

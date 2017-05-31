@@ -11,7 +11,6 @@ import { Camera } from "@ionic-native/camera";
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { Login } from '../pages/login/login';
-import { AddbookPage } from '../pages/addbook/addbook';
 
 export const config = {
   apiKey: "AIzaSyBCZXs-0SwXsns0m498HcyoCp_UqgWQy7o",
@@ -26,8 +25,7 @@ export const config = {
   declarations: [
     MyApp,
     HomePage,
-    Login,
-    AddbookPage
+    Login
   ],
   imports: [
     BrowserModule,
@@ -40,8 +38,7 @@ export const config = {
   entryComponents: [
     MyApp,
     HomePage,
-    Login,
-    AddbookPage
+    Login
   ],
   providers: [
     StatusBar,
